@@ -4,23 +4,54 @@ For today we will be practicing inserting and querying data using SQL.
 
 Here is a website that will let us write queries to interact with some data.  [http://jxs.me/chinook-web/](http://jxs.me/chinook-web/)
 
-On the left are the Tables with their fields.  The right is where we will be writing our queries.  The bottom is where we will see our results.  
+On the left are the Tables with their fields.  The right is where we will be writing our queries.  The bottom is where we will see our results.
 
 Any new tables or records that we add into the database will be removed after you refresh the page.  So if you're wondering where you data went, that may be why.
 
 Use [www.sqlteaching.com](http://www.sqlteaching.com/) or [sqlbolt.com](http://sqlbolt.com/) as resources for the missing keywords you'll need.
 
 ## PERSON
-1. Create a table called Person that records a person's Name, Age, Height, City, FavoriteColor, and Id.  Id should be an auto-incrementing id/primary key.  
-2. Add 5 different people into the Person database.  Remember to not include the Id because it should auto-increment.
-3. List the people in the Person table by Height from tallest to shortest (descending)
+1. Create a table called Person that records a persons Name, Age, Height, City, FavoriteColor, and Id.  Id should be an auto-incrementing id/primary key.
+CREATE TABLE Person(
+  Name TEXT,
+  Height FLOAT,
+  City TEXT,
+  FavoriteColor TEXT,
+  Id INTEGER
+);
 
-(For this database to create an auto incrementing field set it's type to INTEGER PRIMARY KEY AUTOINCREMENT)
+2. Add 5 different people into the Person database.  Remember to not include the Id because it should auto-increment.
+INSERT INTO Person
+(Name, Height, City, FavoriteColor, Id)
+VALUES ("Talon", 6, "Orem", "Green", 0),
+("Lauren", 5, "Orem", "Yellow", 1),
+("Cohen", 1, "Orem", "Blue", 2),
+("Jami", 5, "Tooele", "Purple", 3),
+("David", 6, "Tooele", "Blue", 4);
+3. List the people in the Person table by Height from tallest to shortest (descending)
+SELECT Name, Height
+FROM Person
+ORDER BY Height DESC;
+(For this database to create an auto incrementing field set its type to INTEGER PRIMARY KEY AUTOINCREMENT)
 
   * List the people in the Person table by Height from shortest to tallest (ascending)
+
+  SELECT Name, Height
+  FROM Person
+  ORDER BY Height ASC;
+
   * List all the people in the Person table by oldest first
+  SELECT Name,
+  FROM Person
+  ORDER BY Height DESC;
   * List all the people in the Person table older than age 20.
+  SELECT Name, Age
+  FROM Person
+  WHERE Age > 20;
   * List all the people in the Person table that are exactly 18.
+  SELECT Name, Age
+  FROM Person
+  WHERE Age = 20;
   * List all Person that are less than 20 and older than 30.
   * List all Person that are not 27 (Use not equals)
   * List all Person where their favorite color is not red
@@ -29,14 +60,34 @@ Use [www.sqlteaching.com](http://www.sqlteaching.com/) or [sqlbolt.com](http://s
   * List all Person where their favorite color is orange or green blue (use IN)
   * List all Person where their favorite color is yellow or purple
 
-## ORDER 
-4. Create a table called Orders that records the productName, productPrice, Quantity, and personId  
+## ORDER
+4. Create a table called Orders that records the productName, productPrice, Quantity, and personId
+CREATE TABLE Orders (
+  productName TEXT,
+  productPrice FLOAT,
+  Quantity INTEGER,
+  personId INTEGER
+);
 5. Add 5 Orders to Order table
+INSERT INTO Orders
+(productName, productPrice, Quantity, personId)
+VALUES('Pizza', 5.99, 1, 0),
+('Shake', 2.99, 3, 1),
+('Drink', .99, 5, 2),
+('HotDog', 1.99, 6, 3),
+('Fries', 1.99, 2, 8);
 6. Select all the records from the Order table
-
+SELECT * FROM Orders;
   * Calculate the total number of products Ordered
+  SELECT SUM(Quantity)
+  FROM Orders
   * Calculate the total Order Price
+  SELECT SUM(productPrice)
+  FROM Orders
   * Calculate the total Order Price By personId (If you only made orders for 1 person, go add more for the other people)
+  SELECT SUM(productPrice)
+  FROM Orders
+  WHERE personId
 
 ## Artists
 7. Add 3 new Artists to the Artist table
@@ -55,7 +106,7 @@ Use [www.sqlteaching.com](http://www.sqlteaching.com/) or [sqlbolt.com](http://s
 * Find everyone that reports to Nancy Edwards (Use the ReportsTo column)
 * Count how many people live in Lethbridge
 
-## Invoice 
+## Invoice
 9. Use the Invoice table for the following
 
 * Count how many orders were made from the USA
